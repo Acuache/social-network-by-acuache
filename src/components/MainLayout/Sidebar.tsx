@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom"
 import { Icon } from "@iconify/react";
-import { BtnToggleTheme, BtnLogout } from '../ui/Buttons'
+import { BtnToggleTheme, BtnLogout, BtnNewPost } from '../ui/Buttons'
 const LINKS = [
   {
     label: "Inicio",
@@ -40,14 +40,14 @@ const LINKS = [
 ]
 export default function Sidebar() {
   return (
-    <div className="bg-white dark:bg-bg-dark h-full p-2 tansition-all duration-300">
+    <div className="flex flex-col bg-white dark:bg-bg-dark h-full p-2 tansition-all duration-300">
       {/* Logo */}
       <div>
         ACUACHE
       </div>
 
       {/* Navegación */}
-      <nav className="flex flex-col gap-2 items-center">
+      <nav className="flex flex-col gap-2 items-center flex-1">
         {
           LINKS.map((link, index) => (
             <NavLink
@@ -66,6 +66,8 @@ export default function Sidebar() {
       <BtnToggleTheme />
 
       <BtnLogout />
+
+      <BtnNewPost />
     </div>
   )
 }
