@@ -40,10 +40,12 @@ const LINKS = [
 ]
 export default function Sidebar() {
   return (
-    <div className="flex flex-col bg-white dark:bg-bg-dark h-full p-2 tansition-all duration-300">
+    <div className="flex flex-col bg-white dark:bg-bg-dark h-full p-2 tansition-all duration-300 items-center sm:items-start">
       {/* Logo */}
-      <div>
-        ACUACHE
+      <div className="p-2">
+        <div className="size-8 bg-red-400 ">
+          {/* FOTO + NOMBRE */}
+        </div>
       </div>
 
       {/* Navegación */}
@@ -56,7 +58,7 @@ export default function Sidebar() {
               className={({ isActive }) => `flex items-center gap-3 p-2 rounded-lg font-semibold hover:bg-gray-100 dark:hover:bg-primary/10 dark:hover:text-primary transition-all w-full ${isActive ? "text-blue-600 dark:text-white" : "text-gray-600 dark:text-gray-400"}`}
             >
               <Icon icon={link.icon} width={24} height={24} />
-              <span>{link.label}</span>
+              <span className="hidden sm:inline">{link.label}</span>
             </NavLink>
           ))
         }

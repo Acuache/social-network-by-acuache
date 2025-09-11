@@ -12,7 +12,7 @@ export default function BtnToggleTheme() {
             <Icon icon="line-md:sunny-outline-to-moon-loop-transition" width="24" height="24" />
         }
       </span>
-      <span> Modo:
+      <span className="hidden sm:inline"> Modo:
         {theme === "light" ? " Claro" : " Oscuro"}
       </span>
     </button>
