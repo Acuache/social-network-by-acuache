@@ -40,7 +40,7 @@ const LINKS = [
 ]
 export default function Sidebar() {
   return (
-    <div className="flex flex-col bg-white dark:bg-bg-dark h-full p-2 tansition-all duration-300 items-center sm:items-start">
+    <div className="flex flex-col bg-transparent h-full p-2 transition-colors duration-300 items-center sm:items-start">
       {/* Logo */}
       <div className="p-2">
         <div className="size-8 bg-red-400 ">
