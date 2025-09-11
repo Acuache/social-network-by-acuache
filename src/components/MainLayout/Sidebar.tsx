@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom"
 import { Icon } from "@iconify/react";
-import { BtnToggleTheme } from '../ui/Buttons'
+import { BtnToggleTheme, BtnLogout } from '../ui/Buttons'
 const LINKS = [
   {
     label: "Inicio",
@@ -64,6 +64,8 @@ export default function Sidebar() {
 
       {/* Btn mode theme */}
       <BtnToggleTheme />
+
+      <BtnLogout />
     </div>
   )
 }
