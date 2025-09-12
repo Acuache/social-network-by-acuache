@@ -2,7 +2,7 @@ import { Outlet } from 'react-router-dom'
 import { Sidebar } from '../components/MainLayout'
 export default function MainLayout() {
   return (
-    <div className='flex justify-center h-dvh overflow-hidden bg-white dark:bg-bg-dark text-black dark:text-white transition-colors duration-300'>
+    <div className='flex justify-center h-dvh overflow-hidden bg-[#f7faf9] dark:bg-bg-dark text-black dark:text-white transition-colors duration-300'>
       <section className='flex w-full max-w-[1300px] h-full'>
         <Sidebar />
         <section className='flex-1 px-4 overflow-y-auto h-full'>
