@@ -1,1 +1,5 @@
 export {default as Header} from "./Header"
+export {default as InputPublication} from "./InputPublication"
+export {default as CardPublication} from "./CardPublication"
+export {default as PublicationHeader} from "./PublicationHeader"
+export {default as PublicationImage} from "./PublicationImage"
