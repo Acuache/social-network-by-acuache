@@ -1,36 +1,42 @@
-import { useEffect, useState } from "react"
-import type { RefObject } from "react"
-import { FastAverageColor } from 'fast-average-color';
+import { useEffect, useState, type RefObject } from "react";
+import { FastAverageColor } from "fast-average-color";
 
-interface useImageExtractColorFn {
-  (imgRef: RefObject<HTMLImageElement>, src: string): void | string
-}
+type UseImageExtractColor = (imgRef: RefObject<HTMLImageElement>, src: string) => string;
 
-export const useImageExtractColor: useImageExtractColorFn = (imgRef, src) => {
-  const [bgColor, setBgColor] = useState<string>("#fff")
+export const useImageExtractColor: UseImageExtractColor = (imgRef, src) => {
+  const [bgColor, setBgColor] = useState<string>("#000");
+
   useEffect(() => {
-
     const fac = new FastAverageColor();
-    const img = imgRef.current
+    const img = imgRef.current;
     if (!img) {
-      fac.destroy()
-      return
+      fac.destroy();
+      return;
     }
+
+    let mounted = true;
+
     const handleLoad = async () => {
       try {
-        const color = await fac.getColorAsync(img)
-        setBgColor(color.hex)
+        const color = await fac.getColorAsync(img);
+        if (mounted) setBgColor(color.hex);
       } catch {
-        console.warn("No se puedo obtener el color por defecto, color por defecto #fff")
+        console.warn("No se pudo obtener el color; usando #000 por defecto");
       }
-    }
+    };
 
     if (img.complete) {
-      handleLoad()
+      handleLoad();
     } else {
-      img.addEventListener("load", handleLoad)
-      return () => img.removeEventListener("load", handleLoad)
+      img.addEventListener("load", handleLoad);
     }
-  }, [src])
-  return bgColor
-}
+
+    return () => {
+      mounted = false;
+      img.removeEventListener("load", handleLoad);
+      fac.destroy();
+    };
+  }, [imgRef, src]);
+
+  return bgColor;
+};
