@@ -1,7 +1,12 @@
-import { useEffect, useState, type RefObject } from "react";
+import { useEffect, useState } from "react";
 import { FastAverageColor } from "fast-average-color";
 
-type UseImageExtractColor = (imgRef: RefObject<HTMLImageElement>, src: string) => string;
+type UseImageExtractColor = (
+  imgRef: {
+    current: HTMLImageElement | null
+  },
+  src: string
+) => string;
 
 export const useImageExtractColor: UseImageExtractColor = (imgRef, src) => {
   const [bgColor, setBgColor] = useState<string>("#000");

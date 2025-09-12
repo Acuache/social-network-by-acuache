@@ -1,0 +1,1 @@
+export { useImageExtractColor } from "./useImageExtractColor";
