@@ -6,6 +6,8 @@ export default function Form() {
   function toggleShowPassword() {
     setShowPassword(prev => !prev)
   }
+
+
   return (
     <div className=" flex-2 flex items-center justify-center text-black">
       <form className="bg-white w-[80%] max-w-130  flex flex-col items-center p-5 lg:p-8 ">
@@ -72,15 +74,15 @@ export default function Form() {
           </div>
 
           <div className="flex gap-5 flex-wrap justify-center">
-            <button className="flex-1 flex gap-2 items-center justify-center border-2 border-gray-400 py-1 rounded-full shadow-lg shadow-gray-300 cursor-pointer hover:border-gray-600 hover:shadow-lg transition-all duration-200 px-5">
+            <button className="flex-1 flex gap-2 items-center justify-center border-2 border-gray-400 py-1 rounded-full shadow-lg shadow-gray-300 cursor-pointer hover:border-gray-600 hover:shadow-lg transition-all duration-200 px-5" type="button">
               <Icon icon="flat-color-icons:google" className="size-6" />
               <span className="text-md">Google</span>
             </button>
-            <button className="flex-1 flex gap-2 items-center border-2 justify-center border-gray-400 py-1 rounded-full shadow-lg shadow-gray-300 cursor-pointer  hover:border-gray-600 hover:shadow-lg transition-all duration-200 px-5">
+            <button className="flex-1 flex gap-2 items-center border-2 justify-center border-gray-400 py-1 rounded-full shadow-lg shadow-gray-300 cursor-pointer  hover:border-gray-600 hover:shadow-lg transition-all duration-200 px-5" type="button">
               <Icon icon="logos:facebook" className="size-6" />
-              <span className="text-md">Faccebook</span>
+              <span className="text-md">Facebook</span>
             </button>
-            <button className="flex-1 flex gap-2 items-center border-2 justify-center border-gray-400 py-1 rounded-full shadow-lg shadow-gray-300 cursor-pointer  hover:border-gray-600 hover:shadow-lg transition-all duration-200 px-5">
+            <button className="flex-1 flex gap-2 items-center border-2 justify-center border-gray-400 py-1 rounded-full shadow-lg shadow-gray-300 cursor-pointer  hover:border-gray-600 hover:shadow-lg transition-all duration-200 px-5" type="button">
               <Icon icon="mdi:github" className="size-6 text-black" />
               <span className="text-md">Github</span>
             </button>
