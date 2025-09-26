@@ -43,7 +43,6 @@ export const useSubscription = create<SubscriptionState>((set) => {
     const { data: { session } } = await supabase.auth.getSession()
     if (session?.user) {
       set({ user: session?.user })
-      console.log("inciatizeuser", session.user)
     }
   }
   initializeUser()
@@ -51,7 +50,6 @@ export const useSubscription = create<SubscriptionState>((set) => {
   supabase.auth.onAuthStateChange((_event, session) => {
     if (session?.user) {
       set({ user: session.user })
-      console.log("onAuthStateChange", session.user)
     } else {
       set({ user: null })
     }

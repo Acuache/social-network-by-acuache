@@ -4,3 +4,13 @@ export interface UserProps {
   email: string
   password: string
 }
+
+export interface Usuario {
+  id: number
+  name: string
+  lastname: string
+  email: string
+  id_auth: string
+  photo: string
+}
+
