@@ -1,5 +1,12 @@
+import { useEffect } from 'react'
 import { Header, InputPublication, CardPublication } from '../components/Home'
+import { useUsuariosStore, useSubscription } from '../store'
 export default function Home() {
+  const { user } = useSubscription()
+  const { mostrarUsuarioAuth } = useUsuariosStore()
+  useEffect(() => {
+    mostrarUsuarioAuth(user.id)
+  }, [])
   return (
     <div className=" bg-transparent max-w-[1200px] text-black dark:text-white">
       <div className="grid grid-cols-1 xl:grid-cols-[1fr_300px] h-dvh">
