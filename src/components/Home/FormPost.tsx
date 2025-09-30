@@ -4,7 +4,7 @@ import EmojiPicker, { Theme } from 'emoji-picker-react';
 import type { EmojiClickData } from 'emoji-picker-react';
 import { useState, useRef } from "react";
 import type { ChangeEvent } from "react";
-import { ImageSelector } from '../../hooks'
+import { ImageSelector, useImageSelector } from '../../hooks'
 interface FormPostProps {
   handleClick: () => void
 }
@@ -12,6 +12,7 @@ interface FormPostProps {
 export default function FormPost({ handleClick }: FormPostProps) {
   const [showEmojiPicker, setShowEmojiPicker] = useState<boolean>(false)
   const { dataUsuarioAuth: user } = useUsuariosStore()
+  const { openFileSelector } = useImageSelector()
 
   const refTextArea = useRef<HTMLTextAreaElement>(null)
   const [postText, setPostText] = useState<string>("")
@@ -68,10 +69,13 @@ export default function FormPost({ handleClick }: FormPostProps) {
           </form>
           <ImageSelector />
           <footer className="mt-4 flex items-center justify-between p-4 border border-gray-500/40 rounded-lg">
-            <span className="text-sm">Agregar a tu públicación</span>
-            <button className="hover:bg-gray-400/10 p-1 rounded-full">
-              <Icon icon="mdi:image" className="size-7 cursor-pointer  dark:text-white/50 text-black/50" />
-
+            <span className="text-sm">Agregar a tu publicación</span>
+            <button
+              type="button"
+              onClick={openFileSelector}
+              className="hover:bg-gray-400/10 p-1 rounded-full"
+            >
+              <Icon icon="mdi:image" className="size-7 cursor-pointer dark:text-white/50 text-black/50" />
             </button>
           </footer>
         </article>

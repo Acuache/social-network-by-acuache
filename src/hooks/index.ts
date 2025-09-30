@@ -1,2 +1,2 @@
 export { useImageExtractColor } from "./useImageExtractColor";
-export { ImageSelector } from "./useImageSelector";
+export { ImageSelector, useImageSelector } from "./useImageSelector";

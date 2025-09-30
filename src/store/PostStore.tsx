@@ -1,6 +1,11 @@
 import { create } from "zustand";
 
-export const usePostStore = create((set) => ({
+interface PostState {
+  file: File | null;
+  setFile: (newFile: File | null) => void;
+}
+
+export const usePostStore = create<PostState>((set) => ({
   file: null,
-  setFile: (newFile: string) => set({ file: newFile })
+  setFile: (newFile: File | null) => set({ file: newFile })
 }))
