@@ -1,10 +1,41 @@
 import { Icon } from "@iconify/react";
 import { useUsuariosStore } from '../../store'
+import EmojiPicker, { Theme } from 'emoji-picker-react';
+import type { EmojiClickData } from 'emoji-picker-react';
+import { useState, useRef } from "react";
+import type { ChangeEvent } from "react";
+import { ImageSelector } from '../../hooks'
 interface FormPostProps {
   handleClick: () => void
 }
+
 export default function FormPost({ handleClick }: FormPostProps) {
+  const [showEmojiPicker, setShowEmojiPicker] = useState<boolean>(false)
   const { dataUsuarioAuth: user } = useUsuariosStore()
+
+  const refTextArea = useRef<HTMLTextAreaElement>(null)
+  const [postText, setPostText] = useState<string>("")
+  const addEmoji = (emojiData: EmojiClickData) => {
+    const emojiChar = emojiData.emoji
+    const textarea = refTextArea.current
+    if (!textarea) return
+    const start = textarea.selectionStart
+    const end = textarea.selectionEnd
+    const originalText = textarea.value
+    const newText = originalText.substring(0, start) + emojiChar + originalText.substring(end)
+    setPostText(newText)
+    setShowEmojiPicker(prev => !prev)
+
+    // Actualizar la posición del cursor después del emoji
+    setTimeout(() => {
+      const newCursorPosition = start + emojiChar.length
+      textarea.setSelectionRange(newCursorPosition, newCursorPosition)
+      textarea.focus()
+    }, 0)
+  }
+  const handleTextChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    setPostText(e.target.value);
+  };
   return (
     <section className="fixed w-full h-fill inset-0  dark:bg-black/50 backdrop-blur-sm z-11 flex justify-center items-center" >
       <div className="w-lg max-w-xl bg-[#f7faf9] dark:bg-[#171717] p-4 flex flex-col gap-4">
@@ -18,8 +49,31 @@ export default function FormPost({ handleClick }: FormPostProps) {
             <span>{user!.name} {user!.lastname}</span>
           </header>
           <form>
-            <textarea name="" id="" className="w-full resize-none outline-none" rows={3} placeholder={`¿Qué estás pensando, ${user!.name}?`}></textarea>
+            <textarea ref={refTextArea} value={postText} onChange={handleTextChange} className="w-full resize-none outline-none" rows={3} placeholder={`¿Qué estás pensando, ${user!.name}?`}></textarea>
+            <div className="flex justify-between items-center">
+              <button type="submit" className="py-2 px-4 rounded-lg font-medium bg-primary cursor-pointer hover:bg-primary/70 text-white">Publicar</button>
+              <div className="relative" onClick={() => setShowEmojiPicker(prev => !prev)}>
+                <button type="button" className="cursor-pointer hover:bg-gray-400/10 p-1 rounded-full">
+                  <Icon icon="mdi:emoticon-outline" className="size-7 cursor-pointer dark:text-white/50 text-black/50" />
+                </button>
+                {
+                  showEmojiPicker && (
+                    <div className="absolute -left-80 -top-5">
+                      <EmojiPicker searchDisabled onEmojiClick={addEmoji} theme={Theme.AUTO} width={300} />
+                    </div>
+                  )
+                }
+              </div>
+            </div>
           </form>
+          <ImageSelector />
+          <footer className="mt-4 flex items-center justify-between p-4 border border-gray-500/40 rounded-lg">
+            <span className="text-sm">Agregar a tu públicación</span>
+            <button className="hover:bg-gray-400/10 p-1 rounded-full">
+              <Icon icon="mdi:image" className="size-7 cursor-pointer  dark:text-white/50 text-black/50" />
+
+            </button>
+          </footer>
         </article>
       </div>
     </section>
