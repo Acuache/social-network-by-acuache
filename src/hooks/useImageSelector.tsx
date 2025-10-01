@@ -102,12 +102,13 @@ export function useImageSelector() {
 
 export const ImageSelector = () => {
   const { fileUrl, fileType, fileInputRef, handleImageChange, openFileSelector, removeImage, isDragging, handleDragEnter, handleDragLeave, handleDragOver, handleDrop } = useImageSelector()
+  const { setStateImage } = usePostStore()
 
   return (
     <div className="relative w-full max-w-md bg-[#242526] rounded-lg shadow-xl overflow-hidden">
       <header className="relative h-12 flex items-center justify-center border-b border-gray-700">
         <h2 className="text-white font-medium">Agregar fotos/videos</h2>
-        <button className="absolute right-4 text-gray-400 hover:text-white transition-colors duration-200">
+        <button className="absolute right-4 text-gray-400 hover:text-white transition-colors duration-200" onClick={setStateImage}>
           <Icon icon="mdi:close" className="text-xl" />
         </button>
       </header>
