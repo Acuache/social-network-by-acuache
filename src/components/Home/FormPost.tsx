@@ -6,9 +6,15 @@ import { useState, useRef } from "react";
 import type { ChangeEvent } from "react";
 import { ImageSelector } from '../../hooks'
 import { usePostStore } from '../../store'
+import { useInsertarPostMutate } from '../../stack'
+import { useForm } from 'react-hook-form'
 
 interface FormPostProps {
   handleClick: () => void
+}
+
+interface FormData {
+  description: string
 }
 
 export default function FormPost({ handleClick }: FormPostProps) {
@@ -36,8 +42,19 @@ export default function FormPost({ handleClick }: FormPostProps) {
   }
   const handleTextChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setPostText(e.target.value);
+    setValue("description", e.target.value)
   };
-  const { stateImage, setStateImage } = usePostStore()
+  const { stateImage, setStateImage, file } = usePostStore()
+
+  const { handleSubmit, setValue } = useForm<FormData>()
+  const { mutate, isPending } = useInsertarPostMutate()
+
+  function onSubmit(data: FormData) {
+    mutate(data.description)
+  }
+
+  const puedePublicar = postText.trim().length > 0 || file !== null
+
   return (
     <section className="fixed w-full h-fill inset-0  dark:bg-black/50 backdrop-blur-sm z-11 flex justify-center items-center" >
       <div className="w-lg max-w-xl bg-[#f7faf9] dark:bg-[#171717] p-4 flex flex-col gap-4">
@@ -50,10 +67,10 @@ export default function FormPost({ handleClick }: FormPostProps) {
             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQl-DxLh4oV1NCm2a101jtYxOimBnLZNkiiBQ&s" alt="" className="size-12 object-cover rounded-full" />
             <span>{user!.name} {user!.lastname}</span>
           </header>
-          <form>
+          <form onSubmit={handleSubmit(onSubmit)}>
             <textarea ref={refTextArea} value={postText} onChange={handleTextChange} className="w-full resize-none outline-none" rows={3} placeholder={`¿Qué estás pensando, ${user!.name}?`}></textarea>
             <div className="flex justify-between items-center">
-              <button type="submit" className="py-2 px-4 rounded-lg font-medium bg-primary cursor-pointer hover:bg-primary/70 text-white">Publicar</button>
+              <button type="submit" className={`py-2 px-4 rounded-lg font-medium   text-white ${puedePublicar ? "bg-primary cursor-pointer hover:bg-primary/70" : "bg-gray-400 cursor-not-allowed"}`} disabled={!puedePublicar || isPending}>Publicar</button>
               <div className="relative" onClick={() => setShowEmojiPicker(prev => !prev)}>
                 <button type="button" className="cursor-pointer hover:bg-gray-400/10 p-1 rounded-full">
                   <Icon icon="mdi:emoticon-outline" className="size-7 cursor-pointer dark:text-white/50 text-black/50" />

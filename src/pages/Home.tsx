@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { Header, InputPublication, CardPublication } from '../components/Home'
 import { useUsuariosStore, useSubscription } from '../store'
+import { Toaster } from 'sonner'
 export default function Home() {
   const { user } = useSubscription()
   const { mostrarUsuarioAuth } = useUsuariosStore()
@@ -9,6 +10,7 @@ export default function Home() {
   }, [])
   return (
     <div className=" bg-transparent max-w-[1200px] text-black dark:text-white">
+      <Toaster />
       <div className="grid grid-cols-1 xl:grid-cols-[1fr_300px] h-dvh">
         <main className="flex flex-col h-dvh overflow-hidden border-x-1 border-gray-200 dark:border-gray-700">
           <Header />
