@@ -9,15 +9,12 @@ import { usePostStore } from '../../store'
 import { useInsertarPostMutate } from '../../stack'
 import { useForm } from 'react-hook-form'
 
-interface FormPostProps {
-  handleClick: () => void
-}
 
 interface FormData {
   description: string
 }
 
-export default function FormPost({ handleClick }: FormPostProps) {
+export default function FormPost() {
   const [showEmojiPicker, setShowEmojiPicker] = useState<boolean>(false)
   const { dataUsuarioAuth: user } = useUsuariosStore()
   const refTextArea = useRef<HTMLTextAreaElement>(null)
@@ -44,7 +41,7 @@ export default function FormPost({ handleClick }: FormPostProps) {
     setPostText(e.target.value);
     setValue("description", e.target.value)
   };
-  const { stateImage, setStateImage, file } = usePostStore()
+  const { stateImage, setStateImage, file, setStateForm } = usePostStore()
 
   const { handleSubmit, setValue } = useForm<FormData>()
   const { mutate, isPending } = useInsertarPostMutate()
@@ -60,7 +57,7 @@ export default function FormPost({ handleClick }: FormPostProps) {
       <div className="w-lg max-w-xl bg-[#f7faf9] dark:bg-[#171717] p-4 flex flex-col gap-4">
         <header className="flex justify-between items-center border-b-1 border-amber-50/30 pb-4">
           <p className="font-bold text-xl">Crear publicación</p>
-          <Icon icon="material-symbols:close" className="size-7 cursor-pointer" onClick={handleClick} />
+          <Icon icon="material-symbols:close" className="size-7 cursor-pointer" onClick={setStateForm} />
         </header>
         <article className="flex flex-col gap-2">
           <header className="flex gap-2 items-center">

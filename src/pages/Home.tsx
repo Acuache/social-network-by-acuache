@@ -1,22 +1,49 @@
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import { Header, InputPublication, CardPublication } from '../components/Home'
 import { useUsuariosStore, useSubscription } from '../store'
 import { Toaster } from 'sonner'
+import { useMostrarPostQuery } from '../stack'
 export default function Home() {
   const { user } = useSubscription()
   const { mostrarUsuarioAuth } = useUsuariosStore()
   useEffect(() => {
     mostrarUsuarioAuth(user.id)
   }, [])
+
+  const scrollRef = useRef<HTMLDivElement>(null)
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } = useMostrarPostQuery()
+
+  useEffect(() => {
+    const element = scrollRef.current
+    if (!element) return
+
+    const handleScroll = () => {
+      if (element.scrollTop + element.clientHeight >= element.scrollHeight - 200 && hasNextPage && !isFetchingNextPage) {
+        fetchNextPage()
+      }
+    }
+    if (element) {
+      element.addEventListener("scroll", handleScroll)
+      return () => element.removeEventListener("scroll", handleScroll)
+    }
+
+  }, [fetchNextPage, hasNextPage, isFetchingNextPage])
   return (
     <div className=" bg-transparent max-w-[1200px] text-black dark:text-white">
       <Toaster />
       <div className="grid grid-cols-1 xl:grid-cols-[1fr_300px] h-dvh">
         <main className="flex flex-col h-dvh overflow-hidden border-x-1 border-gray-200 dark:border-gray-700">
           <Header />
-          <div className='overflow-y-auto'>
+          <div ref={scrollRef} className='overflow-y-auto'>
             <InputPublication />
-            <CardPublication />
+            {
+              data?.pages.map((page, pageIndex) => (
+                page.map((item, index) => (
+                  <CardPublication key={`${pageIndex} - ${index}`} {...item} />
+
+                ))
+              ))
+            }
           </div>
         </main>
         <aside className="hidden xl:block">

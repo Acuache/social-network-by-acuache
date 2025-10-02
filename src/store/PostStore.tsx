@@ -2,13 +2,37 @@ import { create } from "zustand";
 import { supabase } from '../supabase/supabase.config'
 import type { PublicacionesProps } from '../interface'
 
+
+export interface PublicacionConDetalles {
+  id: number;
+  descripcion: string;
+  foto: string | null;
+  fecha: string;
+  id_usuario: number;
+  name_user: string;
+  email_user: string;
+  likes: number;
+  photo: string | null;
+  es_nsfw: boolean;
+  type: string;
+  comentario_count: number;
+  like_usuario_actual: boolean;
+}
+
+
 interface PostState {
   file: File | null;
   setFile: (newFile: File | null) => void;
   stateImage: boolean
   setStateImage: () => void
+  stateForm: boolean
+  setStateForm: () => void
   insertarPost: (objectData: PublicacionesProps, file: File) => void
+  dataPost: PublicacionConDetalles | null,
+  mostrarPost: (id: number, desde: number, limite: number) => Promise<PublicacionConDetalles[]>
 }
+
+
 
 
 // 1* Insetar los datos a la tabla publicaciones
@@ -61,7 +85,16 @@ export const usePostStore = create<PostState>((set) => ({
   setFile: (newFile: File | null) => set({ file: newFile }),
   stateImage: false,
   setStateImage: () => set((state) => ({ stateImage: !state.stateImage })),
+  stateForm: false,
+  setStateForm: () => set((state) => ({ stateForm: !state.stateForm })),
   insertarPost: async (objectData: PublicacionesProps, file: File) => {
     await InsertarPost(objectData, file)
+  },
+  dataPost: null,
+  mostrarPost: async (id: number, desde: number, limite: number) => {
+    const { data, error } = await supabase.rpc("publicaciones_con_detalles", { _id_usuario: id }).range(desde, desde + limite - 1)
+    if (error) throw new Error(error.message)
+    set({ dataPost: data })
+    return data
   }
 }))

@@ -1,15 +1,12 @@
-import { useMutation } from "@tanstack/react-query"
+import { useInfiniteQuery, useMutation } from "@tanstack/react-query"
 import { usePostStore, useUsuariosStore } from '../store'
 import { useFormattedDate } from '../hooks'
 import type { PublicacionesProps } from '../interface'
 import { toast } from "sonner"
 
-interface dataProps extends PublicacionesProps {
-  file: File | undefined
-}
 
 export const useInsertarPostMutate = () => {
-  const { insertarPost, file } = usePostStore()
+  const { insertarPost, file, setStateImage, setFile, setStateForm } = usePostStore()
   const { dataUsuarioAuth } = useUsuariosStore()
   const fechaActual = useFormattedDate()
   return useMutation({
@@ -34,7 +31,26 @@ export const useInsertarPostMutate = () => {
     },
     onSuccess: () => {
       toast.success("Publicado")
+      setFile(null)
+      setStateImage()
+      setStateForm()
     }
+  })
+}
 
+export const useMostrarPostQuery = () => {
+  const { dataUsuarioAuth } = useUsuariosStore()
+  const { mostrarPost } = usePostStore()
+  return useInfiniteQuery({
+    queryKey: ["mostrar post", { id_usuario: dataUsuarioAuth?.id }],
+    initialPageParam: 0,
+    queryFn: async ({ pageParam }: { pageParam: number }) => {
+      const data = await mostrarPost(dataUsuarioAuth!.id, pageParam, 10)
+      return data
+    },
+    getNextPageParam: (lastPage: any[], allPages) => {
+      if (!lastPage || lastPage.length < 10) return undefined
+      return allPages.length * 10
+    }
   })
 }
