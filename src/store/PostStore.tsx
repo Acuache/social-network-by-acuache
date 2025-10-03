@@ -30,6 +30,9 @@ interface PostState {
   insertarPost: (objectData: PublicacionesProps, file: File) => void
   dataPost: PublicacionConDetalles | null,
   mostrarPost: (id: number, desde: number, limite: number) => Promise<PublicacionConDetalles[]>
+  likePost: (p_post_id: number, p_user_id: number) => void
+  itemSelect: any
+  setItemSelec: (p: any) => void
 }
 
 
@@ -96,5 +99,12 @@ export const usePostStore = create<PostState>((set) => ({
     if (error) throw new Error(error.message)
     set({ dataPost: data })
     return data
-  }
+  },
+  likePost: async (p_post_id: number, p_user_id: number) => {
+    const { error } = await supabase.rpc("toggle__like", { p_post_id, p_user_id })
+    if (error) throw new Error(error.message)
+  },
+
+  itemSelect: null,
+  setItemSelec: (p) => set({ itemSelect: p })
 }))

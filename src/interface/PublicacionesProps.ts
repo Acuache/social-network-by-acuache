@@ -7,4 +7,6 @@ export interface PublicacionesProps {
   likes?: number
   es_nsfw?: boolean
   type: string
+  comentario_count?: number
+  like_usuario_actual?: boolean
 }
