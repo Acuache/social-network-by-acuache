@@ -3,7 +3,7 @@ export interface PublicacionesProps {
   descripcion: string
   foto: string
   fecha: string
-  id_usuario?: number
+  id_usuario: number
   likes?: number
   es_nsfw?: boolean
   type: string

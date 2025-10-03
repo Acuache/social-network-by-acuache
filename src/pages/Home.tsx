@@ -3,6 +3,7 @@ import { Header, InputPublication, CardPublication } from '../components/Home'
 import { useUsuariosStore, useSubscription } from '../store'
 import { Toaster } from 'sonner'
 import { useMostrarPostQuery } from '../stack'
+import { BeatLoaderComponent } from '../components/ui/spinners'
 export default function Home() {
   const { user } = useSubscription()
   const { mostrarUsuarioAuth } = useUsuariosStore()
@@ -43,6 +44,9 @@ export default function Home() {
 
                 ))
               ))
+            }
+            {
+              isFetchingNextPage && <BeatLoaderComponent />
             }
           </div>
         </main>
