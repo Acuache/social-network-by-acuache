@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react'
-import { Header, InputPublication, CardPublication } from '../components/Home'
+import { Header, InputPublication, CardPublication, ComentarioModal } from '../components/Home'
 import { useUsuariosStore, useSubscription } from '../store'
 import { Toaster } from 'sonner'
 import { useMostrarPostQuery } from '../stack'
@@ -44,6 +44,7 @@ export default function Home() {
   return (
     <div className=" bg-transparent max-w-[1200px] text-black dark:text-white">
       <Toaster />
+      <ComentarioModal />
       <div className="grid grid-cols-1 xl:grid-cols-[1fr_300px] h-dvh">
         <main className="flex flex-col h-dvh overflow-hidden border-x-1 border-gray-200 dark:border-gray-700">
           <Header />
