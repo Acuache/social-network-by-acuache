@@ -4,6 +4,8 @@ import { useUsuariosStore, useSubscription } from '../store'
 import { Toaster } from 'sonner'
 import { useMostrarPostQuery } from '../stack'
 import { BeatLoaderComponent } from '../components/ui/spinners'
+import { useSupabaseSubscription } from '../hooks'
+
 export default function Home() {
   const { user } = useSubscription()
   const { mostrarUsuarioAuth } = useUsuariosStore()
@@ -12,7 +14,7 @@ export default function Home() {
   }, [])
 
   const scrollRef = useRef<HTMLDivElement>(null)
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } = useMostrarPostQuery()
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useMostrarPostQuery()
 
   useEffect(() => {
     const element = scrollRef.current
@@ -29,6 +31,16 @@ export default function Home() {
     }
 
   }, [fetchNextPage, hasNextPage, isFetchingNextPage])
+
+  useSupabaseSubscription({
+    channelName: "public.publicaciones",
+    options: {
+      event: "*",
+      schema: "public",
+      table: "publicaciones"
+    },
+    queryKey: ["mostrar post"]
+  })
   return (
     <div className=" bg-transparent max-w-[1200px] text-black dark:text-white">
       <Toaster />
