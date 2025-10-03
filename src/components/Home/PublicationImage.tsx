@@ -1,5 +1,6 @@
-import { useRef } from 'react'
+import { useRef, useEffect } from 'react'
 import { useImageExtractColor } from '../../hooks'
+import { useInView } from "react-intersection-observer";
 
 interface PublicationImageProp {
   foto: string
@@ -9,6 +10,21 @@ interface PublicationImageProp {
 export default function PublicationImage({ foto, type }: PublicationImageProp) {
   const imgRef = useRef<HTMLImageElement>(null)
   const bgColor = useImageExtractColor(imgRef, foto)
+
+  const videoRef = useRef<HTMLVideoElement>(null)
+
+  const { ref: inViewRef, inView } = useInView({
+    threshold: 0.5,
+    triggerOnce: false,
+  })
+
+  useEffect(() => {
+    if (type === "video" && videoRef.current) {
+      if (!inView) {
+        videoRef.current.pause()
+      }
+    }
+  }, [inView, type])
 
   return (
     <div
@@ -30,6 +46,10 @@ export default function PublicationImage({ foto, type }: PublicationImageProp) {
       {
         type === "video" && (
           <video
+            ref={(el) => {
+              videoRef.current = el
+              inViewRef(el)
+            }}
             muted
             src={foto}
             controls
