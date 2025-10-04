@@ -13,7 +13,7 @@ export default function PublicationToReaction({ id_post, like_usuario_actual, li
           <Icon className={`${like_usuario_actual ? "text-red-700" : "text-gray-400 hover:bg-[#4EB8E933]"}`} icon={`${like_usuario_actual ? "mdi:heart" : "mdi:heart-outline"}`} width={26} height={26} />
         </button>
 
-        <button className="flex gap-2 items-center px-4 text-gray-400 justify-center cursor-pointer hover:bg-[#4EB8E933] p-2 rounded-full" onClick={() => { setItemSelec(id_post), setShowModal(true) }}>
+        <button className="flex gap-2 items-center px-4 text-gray-400 justify-center cursor-pointer hover:bg-[#4EB8E933] p-2 rounded-full" onClick={() => { setItemSelec(id_post); setShowModal(true) }}>
           <Icon className="" icon="mdi:comment-outline" width={26} height={26} />
           <span>Comentar</span>
         </button>

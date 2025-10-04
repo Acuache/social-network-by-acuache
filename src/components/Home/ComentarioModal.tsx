@@ -1,14 +1,42 @@
 import { Icon } from "@iconify/react";
 import { useComentarioStackMutate } from "../../stack";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useComentariosStore } from "../../store";
+import EmojiPicker, { Theme } from 'emoji-picker-react';
+
+import type { EmojiClickData } from 'emoji-picker-react';
+
+
 export default function ComentarioModal() {
   const { setShowModal } = useComentariosStore()
   const [comentario, setComentario] = useState("")
   const { mutate, } = useComentarioStackMutate(comentario, setComentario)
+
+  const refText = useRef<HTMLInputElement>(null)
+  const [showEmojiPicker, setShowEmojiPicker] = useState<boolean>(false)
+
+  const addEmoji = (emojiData: EmojiClickData) => {
+    const emojiChar = emojiData.emoji
+    const textarea = refText.current
+    if (!textarea) return
+    const start = textarea.selectionStart ?? 0
+    const end = textarea.selectionEnd ?? 0
+    const originalText = textarea.value
+    const newText = originalText.substring(0, start) + emojiChar + originalText.substring(end)
+    setComentario(newText)
+    setShowEmojiPicker(prev => !prev)
+
+    // Actualizar la posición del cursor después del emoji
+    setTimeout(() => {
+      const newCursorPosition = start + emojiChar.length
+      textarea.setSelectionRange(newCursorPosition, newCursorPosition)
+      textarea.focus()
+    }, 0)
+  }
+
   return (
     <div className="fixed inset-0 z-100 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4">
-      <div className="dark: bg-neutral-900 rounded-xl w-full max-w-2xl max-h-[90dvh] overflow-hidden shadow-xl flex flex-col p-5">
+      <div className="bg-white dark:bg-neutral-900 rounded-xl w-full max-w-2xl max-h-[90dvh] overflow-hidden shadow-xl flex flex-col p-5">
         <header className="flex items-center justify-between">
           <div className="flex items-center gap-3 text-black dark:text-white">
             <img src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcRMVVWl_8HYbRBNt1xoEQJlXHzvF_ZsbcmnoHJPi_Gi_LyoJ8P1AEjfvdPAnq6iORVsL222nbF3xU4ACJ-gri9KkKebi8nYMCn-kinM3w" alt="" className="size-10 object-cover rounded-full" />
@@ -16,8 +44,15 @@ export default function ComentarioModal() {
               <span className="font-bold lg:max-w-none lg:overflow-visible md:text-ellipsis max-w-[200px] truncate whitespace-nowrap overflow-hidden">Nombre usuario</span>
             </div>
           </div>
-          <button className="cursor-pointer hover:opacity-60" onClick={() => setShowModal(false)}>
+          <button className="cursor-pointer hover:opacity-60 relative" onClick={() => setShowModal(false)}>
             <Icon icon="material-symbols:close" width="24" height="24" />
+            {
+              showEmojiPicker && (
+                <div className="absolute -left-80 -top-5">
+                  <EmojiPicker searchDisabled onEmojiClick={addEmoji} theme={Theme.AUTO} width={300} />
+                </div>
+              )
+            }
           </button>
         </header>
         <span>Descripcion</span>
@@ -34,8 +69,9 @@ export default function ComentarioModal() {
                 type="text"
                 value={comentario}
                 onChange={(e) => setComentario(e.target.value)}
+                ref={refText}
               />
-              <button className="text-gray-500 hover:text-gray-700 relative">
+              <button className="text-gray-500 hover:text-gray-700 relative cursor-pointer" onClick={() => setShowEmojiPicker(prev => !prev)}>
                 <Icon icon="mdi:emoticon-outline" width="24" height="24" />
               </button>
             </section>

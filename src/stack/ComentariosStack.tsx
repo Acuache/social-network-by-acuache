@@ -12,7 +12,7 @@ export const useComentarioStackMutate = (object: string, setComentario: (a: stri
     mutationFn: async () => await insertarComentario({
       comentario: object,
       id_usuario: dataUsuarioAuth!.id,
-      id_publicacion: itemSelect!.id,
+      id_publicacion: itemSelect,
       fecha: fechaActual
     }),
     onError: (error) => (
