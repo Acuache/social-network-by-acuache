@@ -1,4 +1,4 @@
-import { useMutation } from "@tanstack/react-query"
+import { useMutation, useQuery } from "@tanstack/react-query"
 import { useComentariosStore, usePostStore, useUsuariosStore } from '../store'
 import { useFormattedDate } from "../hooks"
 import { toast } from "sonner"
@@ -22,5 +22,14 @@ export const useComentarioStackMutate = (object: string, setComentario: (a: stri
       toast.success("Comentario agregado")
       setComentario("")
     }
+  })
+}
+
+export const useMostrarComentarioStackQuery = () => {
+  const { mostrarComentarios } = useComentariosStore()
+  const { itemPost } = usePostStore()
+  return useQuery({
+    queryKey: ["mostrar comentarios", { id: itemPost.id }],
+    queryFn: () => mostrarComentarios(itemPost.id)
   })
 }

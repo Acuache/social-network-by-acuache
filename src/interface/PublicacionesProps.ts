@@ -1,6 +1,9 @@
 export interface PublicacionesProps {
   id?: number
+  name_user?: string
+  lastname_user?: string
   descripcion: string
+  photo?: string
   foto: string
   fecha: string
   id_usuario: number

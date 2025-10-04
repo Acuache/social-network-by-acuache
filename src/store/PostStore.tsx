@@ -33,6 +33,8 @@ interface PostState {
   likePost: (p_post_id: number, p_user_id: number) => void
   itemSelect: any
   setItemSelec: (p: any) => void
+  itemPost: any
+  setItemPost: (p: any) => void
 }
 
 
@@ -106,5 +108,9 @@ export const usePostStore = create<PostState>((set) => ({
   },
 
   itemSelect: null,
-  setItemSelec: (p) => set({ itemSelect: p })
+  setItemSelec: (p) => set({ itemSelect: p }),
+
+  itemPost: null,
+  setItemPost: (p) => set({ itemPost: p }),
+
 }))

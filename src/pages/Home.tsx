@@ -60,7 +60,6 @@ export default function Home() {
               data?.pages.map((page, pageIndex) => (
                 page.map((item, index) => (
                   <CardPublication key={`${pageIndex} - ${index}`} {...item} />
-
                 ))
               ))
             }

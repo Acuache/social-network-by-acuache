@@ -1,10 +1,11 @@
 import { Icon } from "@iconify/react";
-import { useComentarioStackMutate } from "../../stack";
+import { useComentarioStackMutate, useMostrarComentarioStackQuery } from "../../stack";
 import { useState, useRef } from "react";
-import { useComentariosStore } from "../../store";
+import { useComentariosStore, usePostStore, useUsuariosStore } from "../../store";
 import EmojiPicker, { Theme } from 'emoji-picker-react';
 
 import type { EmojiClickData } from 'emoji-picker-react';
+import ComentarioCard from "./ComentarioCard";
 
 
 export default function ComentarioModal() {
@@ -34,14 +35,18 @@ export default function ComentarioModal() {
     }, 0)
   }
 
+  const { dataUsuarioAuth: user } = useUsuariosStore()
+  const { itemPost: post } = usePostStore()
+
+  const { data } = useMostrarComentarioStackQuery()
   return (
     <div className="fixed inset-0 z-100 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4">
       <div className="bg-white dark:bg-neutral-900 rounded-xl w-full max-w-2xl max-h-[90dvh] overflow-hidden shadow-xl flex flex-col p-5">
         <header className="flex items-center justify-between">
           <div className="flex items-center gap-3 text-black dark:text-white">
-            <img src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcRMVVWl_8HYbRBNt1xoEQJlXHzvF_ZsbcmnoHJPi_Gi_LyoJ8P1AEjfvdPAnq6iORVsL222nbF3xU4ACJ-gri9KkKebi8nYMCn-kinM3w" alt="" className="size-10 object-cover rounded-full" />
+            <img src={"asd"} alt="" className="size-10 object-cover rounded-full" />
             <div className="flex items-center gap-2">
-              <span className="font-bold lg:max-w-none lg:overflow-visible md:text-ellipsis max-w-[200px] truncate whitespace-nowrap overflow-hidden">Nombre usuario</span>
+              <span className="font-bold lg:max-w-none lg:overflow-visible md:text-ellipsis max-w-[200px] truncate whitespace-nowrap overflow-hidden">{post?.name_user} {post?.lastname_user}</span>
             </div>
           </div>
           <button className="cursor-pointer hover:opacity-60 relative" onClick={() => setShowModal(false)}>
@@ -55,14 +60,23 @@ export default function ComentarioModal() {
             }
           </button>
         </header>
-        <span>Descripcion</span>
+        <span>{post?.descripcion}</span>
         <div>
-          imagen
+          <img src={post?.foto} alt="" />
         </div>
+        <section className="flex flex-col gap-4">
+          {
+            data?.map((item, index) => {
+              return (
+                <ComentarioCard key={index} {...item} />
+              )
+            })
+          }
+        </section>
         <section className="flex items-center gap-2 p-4 bg-white dark:bg-neutral-900">
           <section className="w-full gap-2 flex flex-col">
             <section className="flex w-full gap-4">
-              <img src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcRMVVWl_8HYbRBNt1xoEQJlXHzvF_ZsbcmnoHJPi_Gi_LyoJ8P1AEjfvdPAnq6iORVsL222nbF3xU4ACJ-gri9KkKebi8nYMCn-kinM3w" alt="" className="size-10 rounded-full object-cover" />
+              <img src={user?.photo} alt="" className="size-10 rounded-full object-cover" />
               <input
                 placeholder="Escriba un comentario"
                 className="flex-1 bg-gray-100 dark:bg-neutral-800 text-sm rounded-2xl px-4 py-2 focus:outline-none resize-none"
