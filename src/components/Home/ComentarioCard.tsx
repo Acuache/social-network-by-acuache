@@ -1,3 +1,5 @@
+import { useRelativeTime } from "../../hooks";
+
 export interface Comentario {
   id: number;
   id_usuario: number;
@@ -21,7 +23,7 @@ export default function ComentarioCard({ id, id_usuario, nombre_usuario, apellid
               </span>
               <p>{comentario}</p>
               <div className="flex gap-3 mt-1 text-[10px] text-gray-500 relative">
-                <span>{fecha}</span>
+                <span>{useRelativeTime(fecha)}</span>
               </div>
             </section>
           </div>

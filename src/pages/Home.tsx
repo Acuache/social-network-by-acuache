@@ -41,6 +41,15 @@ export default function Home() {
     },
     queryKey: ["mostrar post"]
   })
+  useSupabaseSubscription({
+    channelName: "public.comentarios",
+    options: {
+      event: "*",
+      schema: "public",
+      table: "comentarios"
+    },
+    queryKey: ["mostrar comentarios"]
+  })
 
   const { showModal } = useComentariosStore()
   return (
