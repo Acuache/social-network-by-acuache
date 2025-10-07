@@ -6,6 +6,7 @@ interface GlobalStoreState {
   setFileUrl: (newUrl: string) => void
   open: boolean
   setOpen: () => void
+  openModal: () => void
 }
 export const useGlobalStore = create<GlobalStoreState>((set) => ({
   file: [],
@@ -13,6 +14,7 @@ export const useGlobalStore = create<GlobalStoreState>((set) => ({
   fileUrl: "",
   setFileUrl: (newUrl: string) => set({ fileUrl: newUrl }),
 
-  open: true,
-  setOpen: () => set({ open: false })
+  open: false,
+  setOpen: () => set({ open: false }),
+  openModal: () => set({ open: true })
 }))

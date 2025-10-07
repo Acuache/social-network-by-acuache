@@ -45,6 +45,9 @@ export default function FormUpdateUser() {
           }
         </div>
         <form onSubmit={handleSubmit(onsubmit)}>
+          {
+            isOpen && <ImageSelectorFoto />
+          }
 
           <button
             type="submit"

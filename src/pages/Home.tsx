@@ -8,10 +8,18 @@ import { useSupabaseSubscription } from '../hooks'
 
 export default function Home() {
   const { user } = useSubscription()
-  const { mostrarUsuarioAuth } = useUsuariosStore()
+  const { mostrarUsuarioAuth, dataUsuarioAuth } = useUsuariosStore()
+  const { openModal } = useGlobalStore()
+
   useEffect(() => {
     mostrarUsuarioAuth(user.id)
   }, [])
+
+  useEffect(() => {
+    if (dataUsuarioAuth && !dataUsuarioAuth.photo) {
+      openModal()
+    }
+  }, [dataUsuarioAuth, openModal])
 
   const scrollRef = useRef<HTMLDivElement>(null)
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useMostrarPostQuery()
