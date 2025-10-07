@@ -10,11 +10,14 @@ export interface Comentario {
   fecha: string;
   respuestas_count: number;
 }
-export default function ComentarioCard({ id, id_usuario, nombre_usuario, apellido_usuario, foto_usuario, comentario, fecha }: Comentario) {
+export default function ComentarioCard({ id_usuario, nombre_usuario, apellido_usuario, foto_usuario, comentario, fecha }: Comentario) {
+  // Manejar el caso cuando la foto es "-" o está vacía
+  const photoUrl = foto_usuario && foto_usuario !== '-' ? foto_usuario : 'https://via.placeholder.com/150'
+
   return (
     <div className="pl-4">
       <div className="flex items-start gap-2 group relative w-full">
-        <img src={foto_usuario} alt={`foto user ${id_usuario}`} className="size-9 rounded-full object-cover" />
+        <img src={photoUrl} alt={`foto user ${id_usuario}`} className="size-9 rounded-full object-cover" />
         <div className="flex-1 relative">
           <div className="relative bg-gray-100 dark:bg-neutral-800 p-2 rounded-xl text-sm w-fit max-w-[90%] flex gap-2">
             <section>

@@ -61,7 +61,7 @@ export default function FormPost() {
         </header>
         <article className="flex flex-col gap-2">
           <header className="flex gap-2 items-center">
-            <img src={user?.photo} alt="" className="size-12 object-cover rounded-full" />
+            <img src={user?.photo && user.photo !== '-' ? user.photo : 'https://via.placeholder.com/150'} alt="" className="size-12 object-cover rounded-full" />
             <span>{user!.name} {user!.lastname}</span>
           </header>
           <form onSubmit={handleSubmit(onSubmit)}>

@@ -39,12 +39,17 @@ export default function ComentarioModal() {
   const { itemPost: post } = usePostStore()
 
   const { data } = useMostrarComentarioStackQuery()
+
+  // Manejar el caso cuando la foto es "-" o está vacía
+  const postPhotoUrl = post?.photo && post.photo !== '-' ? post.photo : 'https://via.placeholder.com/150'
+  const userPhotoUrl = user?.photo && user.photo !== '-' ? user.photo : 'https://via.placeholder.com/150'
+
   return (
     <div className="fixed inset-0 z-100 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4">
       <div className="bg-white dark:bg-neutral-900 rounded-xl w-full max-w-2xl max-h-[90dvh] overflow-hidden shadow-xl flex flex-col p-5">
         <header className="flex items-center justify-between">
           <div className="flex items-center gap-3 text-black dark:text-white">
-            <img src={"asd"} alt="" className="size-10 object-cover rounded-full" />
+            <img src={postPhotoUrl} alt="" className="size-10 object-cover rounded-full" />
             <div className="flex items-center gap-2">
               <span className="font-bold lg:max-w-none lg:overflow-visible md:text-ellipsis max-w-[200px] truncate whitespace-nowrap overflow-hidden">{post?.name_user} {post?.lastname_user}</span>
             </div>
@@ -76,7 +81,7 @@ export default function ComentarioModal() {
         <section className="flex items-center gap-2 p-4 bg-white dark:bg-neutral-900">
           <section className="w-full gap-2 flex flex-col">
             <section className="flex w-full gap-4">
-              <img src={user?.photo} alt="" className="size-10 rounded-full object-cover" />
+              <img src={userPhotoUrl} alt="" className="size-10 rounded-full object-cover" />
               <input
                 placeholder="Escriba un comentario"
                 className="flex-1 bg-gray-100 dark:bg-neutral-800 text-sm rounded-2xl px-4 py-2 focus:outline-none resize-none"
