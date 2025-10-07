@@ -40,7 +40,6 @@ export default function ComentarioModal() {
 
   const { data } = useMostrarComentarioStackQuery()
 
-  // Manejar el caso cuando la foto es "-" o está vacía
   const postPhotoUrl = post?.photo && post.photo !== '-' ? post.photo : 'https://via.placeholder.com/150'
   const userPhotoUrl = user?.photo && user.photo !== '-' ? user.photo : 'https://via.placeholder.com/150'
 
@@ -95,7 +94,10 @@ export default function ComentarioModal() {
               </button>
             </section>
             <section className="flex justify-end">
-              <button className="flex gap-1 items-center px-4 py-2 rounded-full text-sm  text-gray-500 cursor-not-allowed" onClick={() => mutate()}>
+              <button className={`flex gap-1 items-center px-4 py-2 rounded-full text-sm  text-gray-500  ${comentario ? "cursor-pointer hover:bg-primary/40 hover:text-white" : "cursor-not-allowed"}`} onClick={() => {
+                if (!comentario) return
+                mutate()
+              }}>
                 <Icon icon="iconamoon:send-fill" width="24" height="24" />
                 Publicar
               </button>
