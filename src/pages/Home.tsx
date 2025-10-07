@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react'
-import { Header, InputPublication, CardPublication, ComentarioModal } from '../components/Home'
-import { useUsuariosStore, useSubscription, useComentariosStore } from '../store'
+import { Header, InputPublication, CardPublication, ComentarioModal, FormUpdateUser } from '../components/Home'
+import { useUsuariosStore, useSubscription, useComentariosStore, useGlobalStore } from '../store'
 import { Toaster } from 'sonner'
 import { useMostrarPostQuery } from '../stack'
 import { BeatLoaderComponent } from '../components/ui/spinners'
@@ -52,9 +52,13 @@ export default function Home() {
   })
 
   const { showModal } = useComentariosStore()
+  const { open } = useGlobalStore()
   return (
     <div className=" bg-transparent max-w-[1200px] text-black dark:text-white">
       <Toaster />
+      {
+        open && <FormUpdateUser />
+      }
       {
         showModal && (
           <ComentarioModal />

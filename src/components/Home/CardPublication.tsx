@@ -13,7 +13,7 @@ export default function CardPublication({ id_usuario, descripcion, foto, type, l
   }
   return (
     <article className="border-y-2  border-gray-500/50 p-4 flex flex-col gap-2.5">
-      <PublicationHeader id_usuario={id_usuario} />
+      <PublicationHeader name_user={props.name_user!} lastname_user={props.lastname_user!} photo={props.photo!} />
       <PublicationComment descripcion={descripcion} />
       <PublicationImage
         foto={foto}

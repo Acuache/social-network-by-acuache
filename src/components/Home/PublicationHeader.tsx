@@ -1,12 +1,12 @@
 import { Icon } from "@iconify/react";
-export default function PublicationHeader({ id_usuario }: { id_usuario: number }) {
+export default function PublicationHeader({ name_user, lastname_user, photo }: { name_user: string, lastname_user: string, photo: string }) {
 
   return (
     <header className="flex justify-between">
       <div className="flex items-center gap-3">
-        <img src="https://alfabetajuega.com/hero/2024/12/esta-fue-la-inspiracion-de-oda-para-crear-a-monkey-d.-luffy.jpg?width=768&aspect_ratio=16:9&format=nowebp" alt="" className="size-10 object-cover rounded-full" />
+        <img src={photo} alt="" className="size-10 object-cover rounded-full" />
         <span className="font-bold
-        ">User</span>
+        ">{name_user} {lastname_user}</span>
       </div>
       <div className="flex items-center gap-3">
         <span className="text-gray-500 text-sm">hace 8h</span>

@@ -10,7 +10,7 @@ export interface Comentario {
   fecha: string;
   respuestas_count: number;
 }
-export default function ComentarioCard({ id, id_usuario, nombre_usuario, apellido_usuario, foto_usuario, comentario, fecha, respuestas_count }: Comentario) {
+export default function ComentarioCard({ id, id_usuario, nombre_usuario, apellido_usuario, foto_usuario, comentario, fecha }: Comentario) {
   return (
     <div className="pl-4">
       <div className="flex items-start gap-2 group relative w-full">

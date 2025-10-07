@@ -1,5 +1,6 @@
 export {useCrearUsuarioYSesionMutate} from "./LoginStack"
 export {useMostrarUsuarioAuthQuery} from "./UsuariosStack"
+export {useEditarUsuarioMutate} from "./UsuariosStack"
 export {useInsertarPostMutate} from "./PostStack"
 export {useMostrarPostQuery} from "./PostStack"
 export {useUserByIDQuery} from "./UserByIDStack"
