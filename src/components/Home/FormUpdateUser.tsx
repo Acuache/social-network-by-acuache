@@ -12,7 +12,7 @@ const IMAGENES = [
 ]
 export default function FormUpdateUser() {
   const [selectedPhoto, setSelectedPhoto] = useState<string | null>(null)
-  const [isOpen, setIsOpen] = useState<boolean>(false)
+  const isOpen = false
 
   const { setFileUrl } = useGlobalStore()
   const { mutate } = useEditarUsuarioMutate()

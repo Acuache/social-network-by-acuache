@@ -41,7 +41,7 @@ export default function MiPerfil() {
             <div className="flex flex-col sm:flex-row items-center sm:items-end">
               <div className="relative">
                 <img
-                  src={data?.photo || 'https://via.placeholder.com/150'}
+                  src={data?.photo && data.photo !== '-' ? data.photo : 'https://via.placeholder.com/150'}
                   alt="Foto de perfil"
                   className="w-32 h-32 rounded-full border-4 border-white dark:border-gray-800 shadow-lg object-cover"
                 />

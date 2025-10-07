@@ -16,8 +16,12 @@ export default function Home() {
   }, [])
 
   useEffect(() => {
-    if (dataUsuarioAuth && !dataUsuarioAuth.photo) {
-      openModal()
+    if (dataUsuarioAuth) {
+      // Verificar si no tiene foto (null, undefined, string vacío, o "-")
+      const sinFoto = !dataUsuarioAuth.photo || dataUsuarioAuth.photo.trim() === '' || dataUsuarioAuth.photo === '-'
+      if (sinFoto) {
+        openModal()
+      }
     }
   }, [dataUsuarioAuth, openModal])
 
